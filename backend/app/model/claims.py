@@ -29,5 +29,6 @@ class Claim(Base):
     previous_claims_count = Column(Integer, nullable=True)
 
     # --- Relationships ---
-    claim_risks = relationship("ClaimRisk", back_populates="claim")
-    claim_routes = relationship("ClaimRoute", back_populates="claim")
+    # claim_risks = relationship("ClaimRisk", back_populates="claim")
+    # claim_routes = relationship("ClaimRoute", back_populates="claim")
+    assessment = relationship("ClaimAssessment", back_populates="claim", uselist=False)

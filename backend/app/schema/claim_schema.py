@@ -1,7 +1,6 @@
 from datetime import datetime, date as dt
-from enum import Enum
 from typing import Optional
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 
 # class AgentStatus(str, Enum):
@@ -52,26 +51,3 @@ class ClaimSchema(BaseModel):
     previous_claims_count: Optional[int] = Field(
         None, description="Number of previous claims"
     )
-
-    # --- Validators ---
-    # @field_validator(
-    #     "claim_id",
-    #     "type",
-    #     "date",
-    #     "amount",
-    #     "description",
-    #     "customer_id",
-    #     "policy_number",
-    #     "incident_location",
-    #     "timestamp_submitted",
-    # )
-    # def required_fields_not_empty(cls, v, field):
-    #     if v is None or (isinstance(v, str) and not v.strip()):
-    #         raise ValueError(f"Field '{field.name}' is required and cannot be empty")
-    #     return v
-
-    # @field_validator("description")
-    # def description_min_length(cls, v):
-    #     if len(v.strip()) < 30:
-    #         raise ValueError("Description must be at least 30 characters long")
-    #     return v
