@@ -1,0 +1,10 @@
+langchain
+langchain-community
+langgraph
+langsmith
+dotenv
+fastapi[standard]
+asyncio
+sqlalchemy
+langchain-google-genai
+aiosqlite
