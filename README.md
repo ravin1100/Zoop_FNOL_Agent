@@ -5,6 +5,7 @@ A sophisticated AI-powered **First Notice of Loss (FNOL)** insurance claim proce
 ## 🎯 Overview
 
 The ZOOP FNOL Agent is an intelligent insurance claim processing system that leverages Google's Gemini AI to automatically:
+
 - **Validate and parse** incoming insurance claims
 - **Assess fraud risk** using AI-powered analysis
 - **Route claims** to appropriate adjusters based on complexity and priority
@@ -49,9 +50,10 @@ ZOOP_FNOL_AGENT/
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - **Framework**: FastAPI (Python web framework)
 - **Database**: SQLite with SQLAlchemy (async support)
-- **AI/ML**: 
+- **AI/ML**:
   - Google Gemini AI (LLM)
   - LangChain (AI framework)
   - LangSmith (tracing & monitoring)
@@ -59,6 +61,7 @@ ZOOP_FNOL_AGENT/
 - **Authentication**: (TBD)
 
 ### Development & Deployment
+
 - **Language**: Python 3.8+
 - **Database ORM**: SQLAlchemy (async)
 - **API Documentation**: Swagger/OpenAPI (auto-generated)
@@ -75,17 +78,20 @@ ZOOP_FNOL_AGENT/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/ravin1100/Zoop_FNOL_Agent.git
    cd ZOOP_FNOL_AGENT
    ```
 
 2. **Navigate to backend directory**
+
    ```bash
    cd backend
    ```
 
 3. **Create virtual environment**
+
    ```bash
    python -m venv venv
    venv\Scripts\activate  # On Windows
@@ -93,25 +99,27 @@ ZOOP_FNOL_AGENT/
    ```
 
 4. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 5. **Configure environment variables**
-   
+
    Update the `env.local` file with your API keys:
+
    ```env
    DATABASE_URL="sqlite+aiosqlite:///./fnol.db"
-   
+
    # Required: Google Gemini API Key
    GOOGLE_API_KEY=your_gemini_api_key_here
-   
+
    # Optional: LangSmith for tracing (recommended for development)
    LANGSMITH_TRACING=true
    LANGSMITH_ENDPOINT=https://api.smith.langchain.com
    LANGSMITH_API_KEY=your_langsmith_api_key_here
    LANGSMITH_PROJECT="Zoop FNOL Agent"
-   
+
    # Optional: OpenAI (currently not used)
    # OPENAI_API_KEY=your-openai-api-key
    ```
@@ -119,6 +127,7 @@ ZOOP_FNOL_AGENT/
 ### Running the Application
 
 1. **Start the FastAPI server**
+
    ```bash
    cd backend
    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
@@ -145,23 +154,27 @@ Or use the interactive Swagger UI at http://localhost:8000/docs
 ## 📋 API Endpoints
 
 ### Claim Processing
+
 - `POST /claims/process` - Process a new insurance claim
 - `GET /claims/{claim_id}` - Retrieve claim details
 - `GET /claims/` - List all claims
 
 ### Health Check
+
 - `GET /` - Basic health check endpoint
 
 ## 🤖 AI Agents
 
 ### 1. Intake Agent
+
 - **Purpose**: Validates and parses incoming claim data
-- **Features**: 
+- **Features**:
   - Field validation
   - Data normalization
   - Missing data identification
 
-### 2. Risk Assessment Agent  
+### 2. Risk Assessment Agent
+
 - **Purpose**: Analyzes claims for potential fraud
 - **Features**:
   - Fraud risk scoring (0-10 scale)
@@ -169,6 +182,7 @@ Or use the interactive Swagger UI at http://localhost:8000/docs
   - Risk factor analysis
 
 ### 3. Routing Agent
+
 - **Purpose**: Determines claim routing and priority
 - **Features**:
   - Adjuster tier assignment (1-3)
@@ -178,6 +192,7 @@ Or use the interactive Swagger UI at http://localhost:8000/docs
 ## 📊 Sample Data
 
 The project includes `sample_data.json` with 15 test scenarios covering:
+
 - ✅ Standard auto claims
 - ⚠️ High-risk fraud cases
 - 🚨 Urgent priority claims
@@ -188,13 +203,13 @@ The project includes `sample_data.json` with 15 test scenarios covering:
 
 ### Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DATABASE_URL` | SQLite database connection | ✅ |
-| `GOOGLE_API_KEY` | Google Gemini API key | ✅ |
-| `LANGSMITH_TRACING` | Enable LangSmith tracing | ❌ |
-| `LANGSMITH_API_KEY` | LangSmith API key | ❌ |
-| `LANGSMITH_PROJECT` | LangSmith project name | ❌ |
+| Variable            | Description                | Required |
+| ------------------- | -------------------------- | -------- |
+| `DATABASE_URL`      | SQLite database connection | ✅       |
+| `GOOGLE_API_KEY`    | Google Gemini API key      | ✅       |
+| `LANGSMITH_TRACING` | Enable LangSmith tracing   | ❌       |
+| `LANGSMITH_API_KEY` | LangSmith API key          | ❌       |
+| `LANGSMITH_PROJECT` | LangSmith project name     | ❌       |
 
 ### Database
 
