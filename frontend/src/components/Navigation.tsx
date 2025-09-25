@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, FileText, Home } from 'lucide-react';
+import { BarChart3, FileText, Home, ClipboardList } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -10,6 +10,7 @@ export default function Navigation() {
   const navItems = [
     { href: '/', icon: Home, label: 'Dashboard' },
     { href: '/submit-claim', icon: FileText, label: 'Submit Claim' },
+    { href: '/assessments', icon: ClipboardList, label: 'Assessments' },
   ];
 
   return (

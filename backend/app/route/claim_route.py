@@ -35,7 +35,14 @@ async def process_claim_live(
     for Parsing, Assessing Risk, and Deciding Routing.
     """
     return StreamingResponse(
-        claim_processing_sse(claim_data, db), media_type="text/event-stream"
+        claim_processing_sse(claim_data, db),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Cache-Control",
+        },
     )
 
 
@@ -53,7 +60,7 @@ async def get_dashboard(db: AsyncSession = Depends(get_db)):
     return await get_dashboard_data(db)
 
 
-@router.get("/{claim_id}")
+@router.get("/processed/{claim_id}")
 async def get_claim_assessment(claim_id: str, db: AsyncSession = Depends(get_db)):
     """Get claim assessment by claim ID"""
     return await get_claim_assessment_by_claim_id(db, claim_id)

@@ -77,6 +77,22 @@ export interface ClaimData {
 // Types for live processing updates
 export interface ProcessingUpdate {
   stage: string;
-  status: 'in_progress' | 'done' | 'completed';
+  status: 'in_progress' | 'done' | 'completed' | 'error';
   claim_id?: string;
+  detail?: string;
+}
+
+// Types for claim assessments
+export interface ClaimAssessment {
+  claim_id: string;
+  risk_level: string;
+  priority: string;
+  adjuster_tier: string[];
+  validation_errors?: string[];
+}
+
+export interface ClaimAssessmentListResponse {
+  page_no: number;
+  page_size: number;
+  data: ClaimAssessment[];
 }

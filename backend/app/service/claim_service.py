@@ -38,26 +38,32 @@ from sqlalchemy.ext.asyncio import AsyncSession
 async def claim_processing_sse(claim_data: ClaimSchema, db: AsyncSession):
     """Generator yielding live status updates for claim processing"""
 
-    # Stage 1: Parsing
-    yield f"data: {json.dumps({'stage': 'Parsing claim', 'status': 'in_progress'})}\n\n"
-    await asyncio.sleep(0.3)  # simulate processing
-    claim_data_parsed = parse_claim_key_fields(claim_data)
-    yield f"data: {json.dumps({'stage': 'Parsing claim', 'status': 'done'})}\n\n"
+    try:
+        # Stage 1: Parsing
+        yield f"data: {json.dumps({'stage': 'Parsing claim', 'status': 'in_progress'})}\n\n"
+        await asyncio.sleep(1)
+        claim_data_parsed = parse_claim_key_fields(claim_data)
+        yield f"data: {json.dumps({'stage': 'Parsing claim', 'status': 'done'})}\n\n"
 
-    # Stage 2: Assessing Risk
-    yield f"data: {json.dumps({'stage': 'Assessing risk', 'status': 'in_progress'})}\n\n"
-    await asyncio.sleep(0.3)
-    risk_assessment = assess_claim_risk(claim_data_parsed)
-    yield f"data: {json.dumps({'stage': 'Assessing risk', 'status': 'done'})}\n\n"
+        # Stage 2: Assessing Risk
+        yield f"data: {json.dumps({'stage': 'Assessing risk', 'status': 'in_progress'})}\n\n"
+        await asyncio.sleep(1)
+        risk_assessment = assess_claim_risk(claim_data_parsed)
+        yield f"data: {json.dumps({'stage': 'Assessing risk', 'status': 'done'})}\n\n"
 
-    # Stage 3: Deciding Routing
-    yield f"data: {json.dumps({'stage': 'Deciding routing', 'status': 'in_progress'})}\n\n"
-    await asyncio.sleep(0.3)
-    routing_decision = decide_routing(claim_data_parsed, risk_assessment)
-    yield f"data: {json.dumps({'stage': 'Deciding routing', 'status': 'done'})}\n\n"
+        # Stage 3: Deciding Routing
+        yield f"data: {json.dumps({'stage': 'Deciding routing', 'status': 'in_progress'})}\n\n"
+        await asyncio.sleep(1)
+        routing_decision = decide_routing(claim_data_parsed, risk_assessment)
+        yield f"data: {json.dumps({'stage': 'Deciding routing', 'status': 'done'})}\n\n"
 
-    # Final message
-    yield f"data: {json.dumps({'stage': 'completed', 'claim_id': claim_data.claim_id})}\n\n"
+        # Final message
+        yield f"data: {json.dumps({'stage': 'completed', 'claim_id': claim_data.claim_id})}\n\n"
+
+    except Exception as e:
+        # Catch errors and send as SSE instead of crashing
+        error_message = {"stage": "error", "detail": str(e)}
+        yield f"data: {json.dumps(error_message)}\n\n"
 
 
 async def process_claim(db: AsyncSession, raw_data: ClaimSchema) -> ClaimSchema:
